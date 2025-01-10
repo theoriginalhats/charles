@@ -3,132 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frostware - Get Key System</title>
+    <title>Frostware - Experience Better Gameplay</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
+            font-family: Arial, sans-serif;
             background-color: black;
             color: white;
+            overflow-x: hidden;
         }
         .container {
             max-width: 1200px;
-            margin: auto;
-            padding: 20px;
-            text-align: center;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 50;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 64px;
+        }
+        nav a {
+            color: #a0a0a0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        nav a:hover {
+            color: #d0d0d0;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom right, rgba(0, 102, 204, 0.1), transparent);
+            pointer-events: none;
+        }
+        .hero-content {
+            max-width: 768px;
+            z-index: 1;
+        }
+        h1 {
+            font-size: 3.75rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        .highlight {
+            color: #0066cc;
+        }
+        p {
+            font-size: 1.25rem;
+            color: #a0a0a0;
+            margin-bottom: 3rem;
+            max-width: 42rem;
+        }
+        .button-container {
+            display: flex;
+            gap: 1rem;
         }
         .button {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 5px;
-            background-color: #0066cc;
-            color: white;
-            cursor: pointer;
-            transition: background-color 0.3s;
+            display: inline-block;
+            font-size: 1.125rem;
+            padding: 1rem 2rem;
+            border: 2px solid;
+            border-radius: 0.25rem;
+            text-decoration: none;
+            transition: background-color 0.3s, color 0.3s;
         }
-        .button:hover {
-            background-color: #0055a5;
+        .button-primary {
+            border-color: #0066cc;
+            color: #0066cc;
+        }
+        .button-primary:hover {
+            background-color: rgba(0, 102, 204, 0.1);
+        }
+        .button-secondary {
+            border-color: #4a4a4a;
+            color: #a0a0a0;
+        }
+        .button-secondary:hover {
+            background-color: rgba(74, 74, 74, 0.3);
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Welcome to Frostware Key System</h1>
-        <p>Click below to get your Frostware key.</p>
-        <a href="/getkey.html"><button class="button">Get Key</button></a>
-    </div>
-
-    <!-- Captcha Page (/getkey) -->
-    <div id="captchaPage" style="display: none;">
-        <h2>Complete the Captcha to Continue</h2>
-        <input type="checkbox" id="captchaCheck"> I am not a robot
-        <button class="button" onclick="verifyCaptcha()">Continue</button>
-    </div>
-
-    <!-- Key Completed Page (/getkey/completed) -->
-    <div id="keyCompletedPage" style="display: none;">
-        <h2>Your Key Has Been Generated!</h2>
-        <p><strong>Generated Key:</strong> <span id="generatedKey"></span></p>
-        <p><strong>Linked HWID:</strong> <span id="linkedHWID"></span></p>
-        <button class="button" onclick="copyKey()">Copy Key</button>
-        <button class="button" onclick="resetKey()">Reset Key</button>
-    </div>
-
-    <script>
-        const API_KEY = '6b7f71712e3c41fca14952967e109443ece5e259f586500e9a0b99bae775d098';
-
-        function verifyCaptcha() {
-            const captchaCheck = document.getElementById('captchaCheck').checked;
-            if (captchaCheck) {
-                window.location.href = 'https://loot-link.com/s?4jJNK2Wt';
-                setTimeout(() => {
-                    window.location.href = '/getkey/completed';
-                }, 3000); 
-            } else {
-                alert('Please complete the captcha.');
-            }
-        }
-
-        window.onload = async function () {
-            const url = window.location.pathname;
-            if (url === '/getkey') {
-                document.getElementById('captchaPage').style.display = 'block';
-            } else if (url === '/getkey/completed') {
-                document.getElementById('keyCompletedPage').style.display = 'block';
-                await generateKey();
-            }
-        }
-
-        async function generateKey() {
-            try {
-                const response = await fetch('https://api.panda.com/api/generate-key/post', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        apiKey: API_KEY,
-                        expire: '2025-12-31',
-                        note: 'Frostware Key',
-                        count: 1,
-                        isPremium: true
-                    })
-                });
-                const data = await response.json();
-                const keyData = data.generatedKeys[0];
-                document.getElementById('generatedKey').innerText = keyData.value;
-                document.getElementById('linkedHWID').innerText = 'HWID-1234';
-            } catch (error) {
-                alert('Error generating key. Please try again.');
-            }
-        }
-
-        function copyKey() {
-            const key = document.getElementById('generatedKey').innerText;
-            navigator.clipboard.writeText(key);
-            alert('Key copied to clipboard!');
-        }
-
-        async function resetKey() {
-            const keyValue = document.getElementById('generatedKey').innerText;
-            try {
-                const response = await fetch('https://api.panda.com/api/reset-hwid', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        apiKey: API_KEY,
-                        keyValue: keyValue
-                    })
-                });
-                const data = await response.json();
-                alert(data.message);
-            } catch (error) {
-                alert('Error resetting key.');
-            }
-        }
-    </script>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="https://discord.gg/getfrost">Discord</a>
+            </nav>
+        </div>
+    </header>
+    <main>
+        <section class="hero">
+            <div class="container">
+                <div class="hero-content">
+                    <h1>Experience better gameplay with <span class="highlight">Frostware</span>.</h1>
+                    <p>
+                        Enhance your Roblox gameplay with our up-and-coming script. Frostware is a multi-support script made to elevate your experience by providing powerful tools and features, ensuring seamless performance and compatibility across various games. Unlock new possibilities and take your gameplay to the next level with Frostware today!
+                    </p>
+                    <div class="button-container">
+                        <a href="./getkey" class="button button-primary">Get Key</a>
+                        <a href="discord.gg/getfrost" class="button button-secondary">Get Script</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 </body>
 </html>
