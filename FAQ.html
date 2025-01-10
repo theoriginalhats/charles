@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Frostware - FAQ</title>
+    <link rel="icon" type="image/png" href="./logo.jpg" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"/>
+    <link rel="stylesheet" href="./faq.css">
+  </head>
+  <body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <a class="navbar-brand" href="#">
+          <img src="./logo.jpg" alt="Frostware Logo" class="nav-logo"> Frostware
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+            <li class="nav-item">
+              <a class="nav-link" href="./download.html">Download</a>
+            </li>
+            <!-- <li class="nav-item">
+              <a class="nav-link" href="./developer.html">Developers</a>
+            </li> -->
+            <li class="nav-item">
+              <a class="nav-link" href="https://discord.gg/3VUUpGRD6D" target="_blank">Discord</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+
+    <div class="background" id="background"></div>
+    
+    <div class="container">
+      <h1>Frequently Asked Questions</h1>
+      <button class="toggle-button" onclick="darkmode()" id="themeToggleButton">
+        <i class="fas fa-sun" id="themeIcon"></i>
+      </button>
+      <div class="faq-item" onclick="toggleAnswer(this)">
+        <div class="question">
+          <h2>My Frostware Android crashes while opening the APK</h2>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+        <div class="line"></div>
+        <div class="answer">
+          Disable notifications from Roblox via your app settings.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleAnswer(this)">
+        <div class="question">
+          <h2>My FrostWare Windows doesn't work</h2>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+        <div class="line"></div>
+        <div class="answer">
+          There's a tutorial video in our server; check it out/restart your
+          executor, and it should work.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleAnswer(this)">
+        <div class="question">
+          <h2>When will Frostware window release?</h2>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+        <div class="line"></div>
+        <div class="answer">
+          Work in progress, expect a release in possibly November.
+        </div>
+      </div>
+      <div class="faq-item" onclick="toggleAnswer(this)">
+        <div class="question">
+          <h2>Will the unc go up?</h2>
+          <i class="fas fa-chevron-right arrow"></i>
+        </div>
+        <div class="line"></div>
+        <div class="answer">Sure, we will try our best.</div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        window.onscroll = function () {
+            var navbar = document.querySelector(".navbar");
+            if (window.scrollY > 50) {
+                navbar.classList.add("scrolled");
+            } else {
+                navbar.classList.remove("scrolled");
+            }
+        };
+
+      function toggleAnswer(item) {
+        const answer = item.querySelector(".answer");
+        const arrow = item.querySelector(".arrow");
+        answer.classList.toggle("show");
+        arrow.classList.toggle("rotate");
+      }
+      function darkmode() {
+        document.body.classList.toggle("dark-mode");
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDarkMode);
+        document
+          .getElementById("themeIcon")
+          .classList.toggle("fa-sun", !isDarkMode);
+        document
+          .getElementById("themeIcon")
+          .classList.toggle("fa-moon", isDarkMode);
+      }
+      function loadTheme() {
+        const isDarkMode = localStorage.getItem("darkMode") === "true";
+        if (isDarkMode) {
+          document.body.classList.add("dark-mode");
+          document.getElementById("themeIcon").classList.add("fa-moon");
+        } else {
+          document.getElementById("themeIcon").classList.add("fa-sun");
+        }
+      }
+      function createSquares(num) {
+        const background = document.getElementById("background");
+        for (let i = 0; i < num; i++) {
+          const square = document.createElement("div");
+          square.className = "square" + (Math.random() > 0.5 ? " glow" : "");
+          const size = Math.random() * 50 + 20;
+          square.style.width = `${size}px`;
+          square.style.height = `${size}px`;
+          square.style.top = `${Math.random() * 100}vh`;
+          square.style.left = `${Math.random() * 100}vw`;
+          square.style.animationDuration = `${Math.random() * 3 + 2}s`;
+          background.appendChild(square);
+        }
+      }
+
+      loadTheme();
+      createSquares(10);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frostware - Download</title>
+    <link rel="icon" type="image/png" href="./logo.jpg" />
+
+    <meta property="og:title" content="Frostware - Download">
+    <meta property="og:description" content="Download Frostware.">
+    <meta property="og:type" content="website">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500&family=Poppins:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            position: relative;
+            overflow: hidden;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .square {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(30, 144, 255, 0.5);
+            animation: float 5s ease-in-out infinite;
+            border-radius: 8px;
+        }
+        .square.glow {
+            box-shadow: 0 0 10px rgba(30, 144, 255, 1);
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-30px); }
+            100% { transform: translateY(0); }
+        }
+        .container {
+            width: 90%;
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            transition: background 0.3s;
+        }
+        h1 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 2em;
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+            color: #1e90ff;
+        }
+        .platform {
+            margin-bottom: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            background-color: rgba(255, 255, 255, 0.02);
+            transition: background-color 0.3s;
+        }
+        .platform:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+        .platform h2 {
+            margin: 0;
+            font-size: 1.2em;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .download-options {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease, opacity 0.5s ease;
+        }
+        .download-options.show {
+            max-height: 200px;
+            opacity: 1;
+            margin-top: 10px;
+        }
+        .download-link {
+            display: block;
+            margin: 5px 0;
+            padding: 10px;
+            color: #1e90ff;
+            text-decoration: none;
+            border-radius: 5px;
+            background-color: rgba(30, 144, 255, 0.1);
+            transition: background-color 0.3s;
+        }
+        .download-link:hover {
+            background-color: rgba(30, 144, 255, 0.2);
+        }
+        .arrow {
+            transition: transform 0.3s;
+        }
+        .arrow.rotate {
+            transform: rotate(90deg);
+        }
+        .toggle-button {
+            display: block;
+            margin: 0 auto 20px;
+            border: none;
+            background: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #333;
+            transition: transform 0.3s;
+        }
+        .dark-mode {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-mode .container {
+            background: rgba(0, 0, 0, 0.5);
+        }
+        .dark-mode .platform {
+            background-color: rgba(40, 40, 40, 0.7);
+            border-color: #444;
+        }
+        .dark-mode .download-link {
+            color: #76c7ff;
+            background-color: rgba(30, 144, 255, 0.1);
+        }
+        .dark-mode .download-link:hover {
+            background-color: rgba(30, 144, 255, 0.2);
+        }
+        .dark-mode .toggle-button {
+            color: #ffd700;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: calc(100% - 160px);
+            padding: 1rem 2rem;
+            background: transparent;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-radius: 20px;
+            box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+            transition: background-color 0.3s ease-in-out;
+          }
+      
+          .header.transparent {
+            background-color: rgba(16, 16, 16, 0.5);
+            backdrop-filter: blur(5px);
+            transition: background-color 0.3s ease, backdrop-filter 0.3s ease;
+          }
+      
+          .header.sticky {
+            border-bottom: 0.1rem solid rgba(0, 0, 0, 0.2);
+          }
+      
+          .navbar a {
+            float: left;
+            display: block;
+            color: #ffffff;
+            text-align: center;
+            padding: 14px 16px;
+            text-decoration: none;
+            border-radius: 20px;
+          }
+      
+          .navbar a:hover {
+            background-color: transparent;
+            backdrop-filter: blur(5px);
+            color: rgb(123, 123, 123);
+            transition: background-color 0.3s ease, color 0.3s ease;
+          }
+      
+          .developer-tab {
+            color: white;
+            margin-right: auto;
+          }
+      
+          .home {
+            color: white;
+            margin-right: auto;
+          }
+
+    </style>
+</head>
+<body>
+
+    <div class="navbar">
+        <a href="./index.html" class="home">Home</a>
+        <!-- <a href="./developer.html" class="home">Developer</a> -->
+        <a href="https://discord.gg/3VUUpGRD6D" target="_blank">Discord</a>
+    </div>
+
+    <div class="background" id="background"></div>
+    <div class="container">
+        <h1>Frostware Download</h1>
+        <button class="toggle-button" onclick="toggleDarkMode()" id="themeToggleButton">&#9728;</button>
+
+        <div class="platform" onclick="toggleDropdown('android')">
+            <h2><i class="fab fa-android"></i> Android <span class="arrow" id="androidArrow">&#9654;</span></h2>
+            <div class="download-options" id="androidOptions">
+                <a href="https://www.mediafire.com/file/i4kpggyk15k50wd/FrostWare.apk/file" class="download-link">Frostware</a>
+            </div>
+        </div>
+
+<!--         <div class="platform" onclick="toggleDropdown('ios')">
+            <h2><i class="fab fa-apple"></i> iOS <span class="arrow" id="iosArrow">&#9654;</span></h2>
+            <div class="download-options" id="iosOptions">
+                <a href="#" class="download-link">Frostware (W.I.P)</a>
+            </div>
+        </div>
+ -->
+        <div class="platform" onclick="toggleDropdown('windows')">
+            <h2><i class="fab fa-windows"></i> Windows <span class="arrow" id="windowsArrow">&#9654;</span></h2>
+            <div class="download-options" id="windowsOptions">
+<!--                 <a href="#" class="download-link">Frostware (W.I.P)</a> -->
+                <a href="FrostWareInstallerV2.zip" class="download-link">FrostWareV2</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(platform) {
+            const options = document.getElementById(platform + 'Options');
+            const arrow = document.getElementById(platform + 'Arrow');
+            options.classList.toggle('show');
+            arrow.classList.toggle('rotate');
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            const themeButton = document.getElementById('themeToggleButton');
+            themeButton.innerHTML = isDarkMode ? '&#9790;' : '&#9728;';
+        }
+
+        function loadTheme() {
+            const isDarkMode = localStorage.getItem('darkMode') === 'true';
+            if (isDarkMode) {
+                document.body.classList.add('dark-mode');
+                document.getElementById('themeToggleButton').innerHTML = '&#9790;';
+            } else {
+                document.getElementById('themeToggleButton').innerHTML = '&#9728;';
+            }
+        }
+
+        function createSquares(num) {
+            const background = document.getElementById('background');
+            for (let i = 0; i < num; i++) {
+                const square = document.createElement('div');
+                square.className = 'square' + (Math.random() > 0.5 ? ' glow' : '');
+                const size = Math.random() * 50 + 20; // Random size between 20px and 70px
+                square.style.width = `${size}px`;
+                square.style.height = `${size}px`;
+                square.style.top = `${Math.random() * 100}vh`;
+                square.style.left = `${Math.random() * 100}vw`;
+                square.style.animationDuration = `${Math.random() * 3 + 2}s`;
+                background.appendChild(square);
+            }
+        }
+
+        loadTheme();
+        createSquares(15);
+    </script>
+</body>
+</html>
