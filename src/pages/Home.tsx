@@ -43,7 +43,7 @@ interface FAQ_I {
 const features: Feature[] = [
   { icon: Shield, title: 'Maximum security', description: 'we all know safety is our first priority. Frostware provides maximum security to make sure our user are safe and secure with their script.' },
   { icon: Zap, title: '100% UNC', description: 'We provide 100% UNC so our user can enjoy their favorite script without any hassle' },
-  { icon: Lock, title: 'fast key system', description: 'Our key system can be done very fast as we provide 1 step for 12 and 2 steps for 24 hours key!' },
+  { icon: Lock, title: 'fast key system', description: 'Our key system can be done very fast as we provide  step for 12 and 2 steps for 24 hours key!' },
   { icon: Cloud, title: 'user-friendly UI', description: 'Our ui design is extremely smooth with amazing animations allowing our user to navigate easily' },
   { icon: Cpu, title: 'Lag-Free gameplay', description: 'as I mentioned, the ui is slick with smooth animations. Due to these feature you will face almost no lag at all!' },
   { icon: Globe, title: 'best customer care', description: 'facing an error? Join the discord server and open a ticket, our staff member will help as soon as possible!' },
