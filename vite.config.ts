@@ -10,6 +10,9 @@ export default defineConfig({
   build: {
     rollupOptions: {
       output: {
+        assetFileNames: 'assets/[name]-[hash].[ext]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
         manualChunks: {
           'react-vendor': ['react', 'react-dom'],
           'router': ['react-router-dom'],
@@ -26,4 +29,8 @@ export default defineConfig({
       },
     },
   },
+  server: {
+    host: true, // Allows access from other devices & domains
+    strictPort: true,
+  }
 });
