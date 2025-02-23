@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Shield, Github } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
