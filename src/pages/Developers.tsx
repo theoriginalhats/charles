@@ -1,3 +1,4 @@
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from 'framer-motion';
 import { Code, Github, X } from 'lucide-react';
 import { FaDiscord } from 'react-icons/fa';
