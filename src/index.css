@@ -1,0 +1,134 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes blob {
+  0% {
+    transform: translate(0px, 0px) scale(1);
+  }
+  33% {
+    transform: translate(30px, -50px) scale(1.2);
+  }
+  66% {
+    transform: translate(-20px, 20px) scale(0.8);
+  }
+  100% {
+    transform: translate(0px, 0px) scale(1);
+  }
+}
+
+@keyframes snowfall {
+  0% {
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+  }
+  100% {
+    transform: translateY(110vh) translateX(100px) rotate(360deg);
+  }
+}
+
+.snowflake {
+  position: fixed;
+  width: 4px;
+  height: 4px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  pointer-events: none;
+  animation: snowfall linear infinite;
+}
+
+.animate-blob {
+  animation: blob 12s infinite cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass-effect {
+  backdrop-filter: blur(16px);
+  background: rgba(4, 4, 8, 0.4); 
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+}
+
+.glass-effect-strong {
+  backdrop-filter: blur(20px);
+  background: rgba(4, 4, 8, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45);
+}
+
+.feature-card {
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-blue-300 to-blue-200;
+}
+
+.bg-gradient-custom {
+  background: radial-gradient(circle at top left, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.1) 0%, transparent 50%),
+              radial-gradient(circle at center, rgba(37, 99, 235, 0.05) 0%, transparent 40%),
+              linear-gradient(180deg, rgba(0, 0, 0, 0.97) 0%, rgba(0, 0, 0, 1) 100%);
+}
+
+.nav-scroll-transition {
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nav-link-active {
+  @apply bg-blue-500/20 rounded-lg;
+  padding: 0.5rem 1rem;
+}
+
+.feature-icon-bg {
+  @apply relative flex items-center justify-center w-16 h-16 rounded-2xl bg-blue-500/10 border border-blue-400/20;
+}
+
+.feature-icon-bg::before {
+  content: '';
+  @apply absolute inset-0 bg-blue-500/20 rounded-2xl blur-lg opacity-50;
+}
+
+.feature-divider {
+  @apply w-12 h-0.5 bg-gradient-to-r from-blue-400/50 to-transparent my-4;
+}
+
+.modal-overlay {
+  @apply bg-black/60 backdrop-blur-sm;
+}
+
+.custom-select-dropdown {
+  @apply absolute top-full left-0 w-full mt-2 glass-effect-strong rounded-lg overflow-hidden z-50;
+}
+
+.custom-select-option {
+  @apply w-full px-4 py-3 text-left text-blue-200 hover:bg-blue-500/20 transition-colors flex items-center gap-2;
+}
+
+.script-card-content {
+  @apply flex flex-col md:flex-row gap-4;
+}
+
+.script-card-image {
+  @apply w-full md:w-24 h-24 flex-shrink-0;
+}
+
+.script-card-info {
+  @apply flex-1;
+}
+
+.script-card-header {
+  @apply flex flex-col md:flex-row md:items-start justify-between gap-4;
+}
+
+.script-card-stats {
+  @apply flex flex-wrap items-center gap-4 mt-3 text-sm;
+}
+
+.script-card-actions {
+  @apply flex flex-wrap gap-3 mt-4;
+}
+
+.script-content {
+  height: 0;
+  overflow: hidden;
+  transition: height 0.2s ease-out;
+}
