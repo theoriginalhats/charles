@@ -18,7 +18,7 @@ const Footer = () => {
               </span>
             </div>
             <p className="text-blue-200 max-w-md">
-              Description.
+              Don't just watch. FEEL THE FROST!
             </p>
           </div>
           
