@@ -41,19 +41,19 @@ interface FAQ_I {
 //
 
 const features: Feature[] = [
-  { icon: Shield, title: 'Title', description: 'Description' },
-  { icon: Zap, title: 'Title', description: 'Description' },
-  { icon: Lock, title: 'Title', description: 'Description' },
-  { icon: Cloud, title: 'Title', description: 'Description' },
-  { icon: Cpu, title: 'Title', description: 'Description' },
-  { icon: Globe, title: 'Title', description: 'Description' },
+  { icon: Shield, title: 'Maximum security', description: 'we all know safety is our first priority. Frostware provides maximum security to make sure our user are safe and secure with their script.' },
+  { icon: Zap, title: '100% UNC', description: 'We provide 100% UNC so our user can enjoy their favorite script without any hassle' },
+  { icon: Lock, title: 'fast key system', description: 'Our key system can be done very fast as we provide 1 step for 12 and 2 steps for 24 hours key!' },
+  { icon: Cloud, title: 'user-friendly UI', description: 'Our ui design is extremely smooth with amazing animations allowing our user to navigate easily' },
+  { icon: Cpu, title: 'Lag-Free gameplay', description: 'as I mentioned, the ui is slick with smooth animations. Due to these feature you will face almost no lag at all!' },
+  { icon: Globe, title: 'best customer care', description: 'facing an error? Join the discord server and open a ticket, our staff member will help as soon as possible!' },
 ];
 
 const faqs: { question: string; answer: string }[] = [
-  { question: 'What is Frostware?', answer: 'Frostware is an executor that can execute scripts.' },
+  { question: 'What is Frostware?', answer: 'Frostware is the best executor at your service. With its slick and smooth Ui design and animation it provides an amazing gameplay.' },
   { question: 'How do I get started?', answer: 'Simply go up and click on the Download Button in the homepage and click on any of the downloads for your device.' },
-  { question: 'Is this safe to use?', answer: 'Yes, it is safe to use.' },
-  { question: 'Do I need a key?', answer: 'Yes, Nebula uses a key system to maintain service.' },
+  { question: 'Is this safe to use?', answer: 'Yes, it is 100% safe to use.' },
+  { question: 'Do I need a key?', answer: 'Yes, Frostware provides a short duration key system for both 12 hours and 24 hours..' },
 ];
 
 //
