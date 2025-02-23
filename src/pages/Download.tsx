@@ -42,7 +42,7 @@ const executors: Executor[] = [
     statusIcon: AlertCircle,
     statusColor: 'red',
     description: 'Executor for Windows.',
-    features: ['Test 1', 'Test 2', 'Test 3'],
+    features: ['N/A', 'N/A', 'N/A'],
   },
   {
     id: 'android',
@@ -52,9 +52,9 @@ const executors: Executor[] = [
     statusIcon: CheckCircle2,
     statusColor: 'green',
     description: 'Mobile executor for Android devices',
-    features: ['Test 1', 'Test 2', 'Test 3'],
+    features: ['100% UNC', 'Fast key system', 'lag-free gameplay'],
     versions: [
-      { name: '64-bit', status: 'available', url: '#' },
+      { name: '64-bit', status: 'available', url: 'https://www.mediafire.com/file/6671m74660cnk8q/Frostware.apk/file' },
       { name: '32-bit', status: 'wip' },
     ],
   },
