@@ -222,19 +222,19 @@ const DownloadPage: React.FC = () => {
     useState<JSONS | null>(null);
 
   useEffect(() => {
-    const fetchData = () => {
+    const FetchJson = () => {
       fetch(
         "https://raw.githubusercontent.com/Jake-Brock/Frostwebsite/refs/heads/main/Fw%20download.json"
       )
         .then((res) => res.json())
         .then((data: JSONS) => setAndroidDownload(data))
         .catch((err) =>
-          console.error("Error fetching Android download JSON:", err)
+          console.error("Error fetching JSON:", err)
         );
     };
 
-    fetchData();
-    const interval_Id = setInterval(fetchData, 30000); // 30 seconds
+    FetchJson();
+    const interval_Id = setInterval(FetchJson, 30000); // 30 seconds
 
     return () => clearInterval(interval_Id);
   }, []);
@@ -285,7 +285,7 @@ const DownloadPage: React.FC = () => {
       statusIcon: Clock,
       statusColor: "gray",
       description: "Currently discontinued for iOS devices",
-      features: ["Test 1", "Test 2", "Test 3"],
+      features: ["N/A", "N/A", "N/A"],
     },
   ];
 
