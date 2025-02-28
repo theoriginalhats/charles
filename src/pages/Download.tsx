@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { motion } from 'framer-motion';
+import { useState, useEffect, useCallback } from "react";
+import { motion } from "framer-motion";
 import {
   Download,
   Monitor,
@@ -9,15 +9,13 @@ import {
   CheckCircle2,
   Clock,
   ChevronDown,
-} from 'lucide-react';
+} from "lucide-react";
 
-
-
-type ExecutorStatus = 'working' | 'patched' | 'discontinued';
+type ExecutorStatus = "working" | "patched" | "discontinued";
 
 interface Executor_Version {
   name: string;
-  status: 'available' | 'wip' | string;
+  status: "available" | "wip" | string;
   url?: string;
 }
 
@@ -32,49 +30,22 @@ interface Executor {
   features: string[];
   versions?: Executor_Version[];
 }
-// could have add a json file link but whatever
-const executors: Executor[] = [
-  {
-    id: 'windows',
-    name: 'Windows Executor',
-    icon: Monitor,
-    status: 'patched',
-    statusIcon: AlertCircle,
-    statusColor: 'red',
-    description: 'Executor for Windows.',
-    features: ['N/A', 'N/A', 'N/A'],
-  },
-  {
-    id: 'android',
-    name: 'Android Executor',
-    icon: Smartphone,
-    status: 'working',
-    statusIcon: CheckCircle2,
-    statusColor: 'green',
-    description: 'Mobile executor for Android devices',
-    features: ['100% UNC', 'Fast key system', 'lag-free gameplay'],
-    versions: [
-      { name: '64-bit', status: 'available', url: 'https://www.mediafire.com/file/6671m74660cnk8q/Frostware.apk/file' },
-      { name: '32-bit', status: 'wip' },
-    ],
-  },
-  {
-    id: 'ios',
-    name: 'iOS Executor',
-    icon: Apple,
-    status: 'discontinued',
-    statusIcon: Clock,
-    statusColor: 'gray',
-    description: 'Currently discontinued for iOS devices',
-    features: ['Test 1', 'Test 2', 'Test 3'],
-  },
-];
+interface JSONS {
+  name: string;
+  version: string;
+  ApkLink: {
+    "32": string;
+    "64": string;
+  };
+  WindowsLink: string;
+  discord_invite: string;
+}
 
 const Status_Style = (status: ExecutorStatus): string => {
   const styles: { [key in ExecutorStatus]: string } = {
-    working: 'bg-green-500/10 text-green-400 border-green-500/30',
-    patched: 'bg-red-500/10 text-red-400 border-red-500/30',
-    discontinued: 'bg-gray-500/10 text-gray-400 border-gray-500/30',
+    working: "bg-green-500/10 text-green-400 border-green-500/30",
+    patched: "bg-red-500/10 text-red-400 border-red-500/30",
+    discontinued: "bg-gray-500/10 text-gray-400 border-gray-500/30",
   };
   return styles[status] || styles.discontinued;
 };
@@ -85,7 +56,11 @@ interface VersionSelectorProps {
   SelectedVersion: Executor_Version | null;
 }
 
-const VersionSelector: React.FC<VersionSelectorProps> = ({ versions, onSelect, SelectedVersion }) => {
+const VersionSelector: React.FC<VersionSelectorProps> = ({
+  versions,
+  onSelect,
+  SelectedVersion,
+}) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   return (
@@ -94,10 +69,12 @@ const VersionSelector: React.FC<VersionSelectorProps> = ({ versions, onSelect, S
         onClick={() => setIsOpen(!isOpen)}
         className="w-full px-4 py-2 bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30 rounded-lg flex items-center justify-between transition-all"
       >
-        <span className="text-blue-200">{SelectedVersion?.name || 'Select Version'}</span>
+        <span className="text-blue-200">
+          {SelectedVersion?.name || "Select Version"}
+        </span>
         <ChevronDown
           className={`w-4 h-4 text-blue-400 transition-transform duration-300 ${
-            isOpen ? 'transform rotate-180' : ''
+            isOpen ? "transform rotate-180" : ""
           }`}
         />
       </button>
@@ -127,9 +104,24 @@ interface ExecutorCardProps {
 }
 
 const ExecutorCard: React.FC<ExecutorCardProps> = ({ executor }) => {
+  const getDefaultVersion = useCallback(() => {
+    if (executor.versions) {
+      if (executor.id === "android") {
+        return executor.versions.find((v) => v.name === "64-bit") || null;
+      }
+      return executor.versions.find((v) => v.status === "available") || null;
+    }
+    return null;
+  }, [executor]);
+
   const [SelectedVersion, setSelectedVersion] = useState<Executor_Version | null>(
-    executor.versions?.find((v: Executor_Version) => v.status === 'available') || null
+    getDefaultVersion()
   );
+  
+  useEffect(() => {
+    setSelectedVersion(getDefaultVersion());
+  }, [executor.versions, getDefaultVersion]);
+
   const StatusIcon = executor.statusIcon;
   const StatusStyle = Status_Style(executor.status);
   const ExecutorIcon = executor.icon;
@@ -148,7 +140,9 @@ const ExecutorCard: React.FC<ExecutorCardProps> = ({ executor }) => {
             <ExecutorIcon className="w-12 h-12 text-blue-400 relative z-10" />
           </div>
           <div>
-            <h3 className="text-xl font-bold mb-2 gradient-text">{executor.name}</h3>
+            <h3 className="text-xl font-bold mb-2 gradient-text">
+              {executor.name}
+            </h3>
             <span
               className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-sm font-medium border ${StatusStyle}`}
             >
@@ -169,7 +163,7 @@ const ExecutorCard: React.FC<ExecutorCardProps> = ({ executor }) => {
             ))}
           </div>
 
-          {executor.status === 'working' && executor.versions && (
+          {executor.status === "working" && executor.versions && (
             <div className="mt-6 space-y-4">
               <VersionSelector
                 versions={executor.versions}
@@ -179,31 +173,39 @@ const ExecutorCard: React.FC<ExecutorCardProps> = ({ executor }) => {
 
               {SelectedVersion && (
                 <motion.a
-                  href={SelectedVersion.status === 'available' ? SelectedVersion.url : '#'}
+                  href={
+                    SelectedVersion.status === "available"
+                      ? SelectedVersion.url
+                      : "#"
+                  }
                   className={`w-full inline-flex items-center justify-center gap-2 px-6 py-2.5 rounded-lg transition-all group ${
-                    SelectedVersion.status === 'available'
-                      ? 'bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30'
-                      : 'bg-gray-500/10 border border-gray-500/30 cursor-not-allowed'
+                    SelectedVersion.status === "available"
+                      ? "bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/30"
+                      : "bg-gray-500/10 border border-blue-500/30 cursor-not-allowed"
                   }`}
                   onClick={(e) => {
-                    if (SelectedVersion.status !== 'available') {
+                    if (SelectedVersion.status !== "available") {
                       e.preventDefault();
                     }
                   }}
                 >
                   <Download
                     className={`w-4 h-4 ${
-                      SelectedVersion.status === 'available' ? 'text-blue-400' : 'text-gray-400'
+                      SelectedVersion.status === "available"
+                        ? "text-blue-400"
+                        : "text-gray-400"
                     } group-hover:scale-110 transition-transform`}
                   />
                   <span
                     className={`${
-                      SelectedVersion.status === 'available'
-                        ? 'text-blue-200 group-hover:text-white'
-                        : 'text-gray-400'
+                      SelectedVersion.status === "available"
+                        ? "text-blue-200 group-hover:text-white"
+                        : "text-gray-400"
                     } transition-colors`}
                   >
-                    {SelectedVersion.status === 'available' ? 'Download' : 'Not Available'}
+                    {SelectedVersion.status === "available"
+                      ? "Download"
+                      : "Not Available"}
                   </span>
                 </motion.a>
               )}
@@ -216,6 +218,77 @@ const ExecutorCard: React.FC<ExecutorCardProps> = ({ executor }) => {
 };
 
 const DownloadPage: React.FC = () => {
+  const [androidDownload, setAndroidDownload] =
+    useState<JSONS | null>(null);
+
+  useEffect(() => {
+    const fetchData = () => {
+      fetch(
+        "https://raw.githubusercontent.com/Jake-Brock/Frostwebsite/refs/heads/main/Fw%20download.json"
+      )
+        .then((res) => res.json())
+        .then((data: JSONS) => setAndroidDownload(data))
+        .catch((err) =>
+          console.error("Error fetching Android download JSON:", err)
+        );
+    };
+
+    fetchData();
+    const interval_Id = setInterval(fetchData, 30000); // 30 seconds
+
+    return () => clearInterval(interval_Id);
+  }, []);
+
+  const executors: Executor[] = [
+    {
+      id: "windows",
+      name: "Windows Executor",
+      icon: Monitor,
+      status: "patched",
+      statusIcon: AlertCircle,
+      statusColor: "red",
+      description: "Executor for Windows.",
+      features: ["N/A", "N/A", "N/A"],
+    },
+    {
+      id: "android",
+      name: "Android Executor",
+      icon: Smartphone,
+      status: "working",
+      statusIcon: CheckCircle2,
+      statusColor: "green",
+      description: "Mobile executor for Android devices",
+      features: ["100% UNC", "Fast key system", "lag-free gameplay"],
+      versions: androidDownload
+        ? [
+            {
+              name: "64-bit",
+              status: androidDownload.ApkLink["64"] ? "available" : "wip",
+              url: androidDownload.ApkLink["64"],
+            },
+            {
+              name: "32-bit",
+              status: androidDownload.ApkLink["32"] ? "available" : "wip",
+              url: androidDownload.ApkLink["32"],
+            },
+          ]
+        : [
+            { name: "64-bit", status: "wip" },
+            { name: "32-bit", status: "wip" },
+          ],
+    },
+    {
+      id: "ios",
+      name: "iOS Executor",
+      icon: Apple,
+      status: "discontinued",
+      statusIcon: Clock,
+      statusColor: "gray",
+      description: "Currently discontinued for iOS devices",
+      features: ["Test 1", "Test 2", "Test 3"],
+    },
+  ];
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
